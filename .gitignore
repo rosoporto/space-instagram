@@ -12,6 +12,7 @@ build/
 develop-eggs/
 dist/
 downloads/
+images/
 eggs/
 .eggs/
 lib/
@@ -22,9 +23,13 @@ var/
 wheels/
 pip-wheel-metadata/
 share/python-wheels/
+.vscode/
+config/
 *.egg-info/
 .installed.cfg
 *.egg
+*.jp*
+*.png
 MANIFEST
 
 # PyInstaller
