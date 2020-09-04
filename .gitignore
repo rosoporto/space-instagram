@@ -30,6 +30,7 @@ config/
 *.egg
 *.jp*
 *.png
+*test*
 MANIFEST
 
 # PyInstaller

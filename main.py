@@ -3,7 +3,7 @@ import logging
 import argparse
 from dotenv import load_dotenv
 from instabot import Bot
-from util import path_image_folder, resize_and_convert
+from util import set_path, resize_and_convert
 from fetch_spacex import fetch_spacex_last_launch
 from fetch_hubble import get_hubble_collection
 from fetch_insta import publish_in_insta
@@ -38,7 +38,7 @@ def main():
   PASSWORD = os.getenv('PASSWORD')
   bot.login(username=USERNAME, password=PASSWORD)
 
-  images_dir = path_image_folder(args.dir)
+  images_dir = set_path(args.dir)
 
   if args.space:
     fetch_spacex_last_launch(images_dir)

@@ -3,11 +3,11 @@ from pathlib import Path
 from PIL import Image
 
 
-def take_file_extension(url: str) -> str:
+def get_file_extension(url: str) -> str:
   return url.split('.')[-1]
 
 
-def path_image_folder(images_dir: str) -> Path:
+def set_path(images_dir: str) -> Path:
   Path(images_dir).mkdir(parents=True, exist_ok=True)
   return Path(Path.cwd()).joinpath(images_dir)
 
@@ -19,19 +19,19 @@ def save_pictures(filename: str, url: str, images_dir: Path) -> None:
     file.write(response.content) 
 
 
-def clean_folder(images_dir: Path, file_format: str ='jpg') -> None:
-  '''Удалить в директории все файлы 'all' или только с расширением *.jpg'''  
+def clean_folder(images_dir: Path, excluding=None) -> None:  
   for image_file in images_dir.glob('**/*'):
-    if file_format == 'jpg':
-      if not str(image_file).endswith(file_format):
+    if excluding is not None:
+      if not str(image_file).endswith(excluding):
         image_file.unlink()
-    elif file_format == 'all':
+    else:
       image_file.unlink()
 
 
 def resize_and_convert(images_dir: Path) -> None:
   for image_file in images_dir.iterdir():
-    image: Image = Image.open(image_file.absolute().__str__())
+    image_file: str = str(image_file)
+    image: Image = Image.open(image_file)
 		
     if image.mode != 'RGB':
       image = image.convert('RGB')
@@ -45,10 +45,10 @@ def resize_and_convert(images_dir: Path) -> None:
 			
     cropped = image.crop(coordinates)
 		
-    new_name_image: str = image_file.absolute().__str__().split('\\')[-1].split('.')[0] + '.jpg'
+    new_name_image: str = image_file.split('\\')[-1].split('.')[0] + '.jpg'
     new_name_image = Path(Path.cwd()).joinpath(images_dir, new_name_image)    
 		
     cropped.save(new_name_image, format('JPEG'))
 
-  clean_folder(images_dir)
+  clean_folder(images_dir, 'jpg')
   
