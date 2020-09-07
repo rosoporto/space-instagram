@@ -43,9 +43,9 @@ def resize_and_convert(images_dir: Path) -> None:
       cropped_up = cropped_down = (image.height - image.width) / 2
       coordinates: tuple = (0, cropped_up, image.width, image.height - cropped_down)
 			
-    cropped = image.crop(coordinates)
-		
-    new_name_image: str = image_file.split('\\')[-1].split('.')[0] + '.jpg'
+    cropped = image.crop(coordinates)		
+    
+    new_name_image = Path(image_file).stem + '.jpg'
     new_name_image = Path(Path.cwd()).joinpath(images_dir, new_name_image)    
 		
     cropped.save(new_name_image, format('JPEG'))
